@@ -1,0 +1,36 @@
+install.packages("urca", repos = "https://cran.r-project.org/")
+install.packages("tseries", repos = "https://cran.r-project.org/")
+library(urca)
+library(tseries)
+library(AER)
+library(urca)
+data("USMacroG")
+unemp_us <- USMacroG[2:204,9]
+plot(unemp_us, col = "magenta", type = "l", xlab = "Index", ylab = "Unemployed (US)")
+unemp_sum1 <- summary(ur.df(unemp_us))
+unemp_sum2 <- summary(ur.df(unemp_us, type = "none", lags = 1))
+unemp_sum3 <- summary(ur.df(unemp_us, type = "none", lags = 2))
+unemp_sum4 <- summary(ur.df(log(unemp_us), type = "none", lags = 0))
+unemp_sum5 <- summary(ur.df(log(unemp_us), type = "trend", lags = 0))
+unemp_sum6 <- summary(ur.df(log(unemp_us), type = "drift", lags = 0))
+unemp_sum7 <- summary(ur.df(diff(unemp_us), type = "none", lags = 0))
+unemp_sum8 <- summary(ur.df(diff(unemp_us), type = "none", lags = 1))
+unemp_sum9 <- summary(ur.df(diff(unemp_us), type = "none", lags = 2))
+inflation_us <- USMacroG[2:204,11]
+inf_sum1 <- summary(ur.df(inflation_us, type = "none", lags = 0))
+inf_sum2 <- summary(ur.df(inflation_us, type = "none", lags = 1))
+inf_sum3 <- summary(ur.df(inflation_us, type = "none", lags = 2))
+money_supply <- USMacroG[,7]
+plot(money_supply, col = "blue", xlab = "Time", ylab = "Money Supply")
+m1_sum1 <- summary(ur.df(money_supply))
+m1_sum2 <- summary(ur.df(money_supply, type = "trend", lags = 0))
+m1_sum3 <- summary(ur.df(money_supply, type = "trend", lags = 1))
+m1_sum4 <- summary(ur.df(money_supply, type = "trend", lags = 2))
+m1_sum5 <- summary(ur.df(diff(money_supply), type = "trend", lags = 0))
+
+
+library(tseries)
+adf.test(unemp_us)
+adf.test(inflation_us)
+adf.test(money_supply)
+
